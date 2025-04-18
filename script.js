@@ -1,38 +1,21 @@
 // Global variables
 let jobData = [];
-let currentSort = { column: 'applicationdate', ascending: false };
+let currentSort = { column: 'applicationDate', ascending: false };
 let applicationChart = null;
 
-// Fetch and parse CSV data
+// Fetch and parse JSON data
 async function loadJobData() {
     try {
-        const response = await fetch('data.csv');
-        const csvText = await response.text();
-        jobData = parseCSV(csvText);
+        const response = await fetch('data.json');
+        const data = await response.json();
+        jobData = data.jobs;
         updateStats();
         updateChart();
         applyFiltersAndSort();
     } catch (error) {
         console.error('Error loading job data:', error);
-        document.getElementById('jobList').innerHTML = '<div class="job-card">Error loading data. Please ensure data.csv exists in the repository.</div>';
+        document.getElementById('jobList').innerHTML = '<div class="job-card">Error loading data. Please ensure data.json exists in the repository.</div>';
     }
-}
-
-// Parse CSV text into array of objects
-function parseCSV(csvText) {
-    const lines = csvText.split('\n');
-    const headers = lines[0].split(',').map(header => header.trim());
-    
-    return lines.slice(1)
-        .filter(line => line.trim())
-        .map(line => {
-            const values = line.split(',').map(value => value.trim());
-            const entry = {};
-            headers.forEach((header, index) => {
-                entry[header.toLowerCase().replace(/\s+/g, '')] = values[index] || '';
-            });
-            return entry;
-        });
 }
 
 // Update statistics
@@ -57,7 +40,7 @@ function updateChart() {
     // Group applications by date
     const applicationsByDate = {};
     jobData.forEach(job => {
-        const date = job.applicationdate.split('T')[0];
+        const date = job.applicationDate;
         applicationsByDate[date] = (applicationsByDate[date] || 0) + 1;
     });
 
@@ -147,7 +130,7 @@ function applyFiltersAndSort() {
         let bVal = b[currentSort.column];
         
         // Handle date comparison
-        if (currentSort.column === 'applicationdate') {
+        if (currentSort.column === 'applicationDate') {
             aVal = new Date(aVal);
             bVal = new Date(bVal);
         }
@@ -160,23 +143,87 @@ function applyFiltersAndSort() {
     renderJobCards(filteredData);
 }
 
+// Format comments
+function formatComments(comments) {
+    return comments.map(comment => `
+        <div class="comment">
+            <div class="comment-header">
+                <span>${formatDate(comment.date)}</span>
+            </div>
+            <div class="comment-text">${comment.text}</div>
+        </div>
+    `).join('');
+}
+
+// Add new comment
+async function addComment(jobId, commentText) {
+    const job = jobData.find(j => j.id === jobId);
+    if (!job) return;
+
+    const newComment = {
+        id: `${jobId}${job.comments.length + 1}`,
+        date: new Date().toISOString(),
+        text: commentText
+    };
+
+    job.comments.push(newComment);
+    
+    // In a real application, you would save this to the server
+    // For now, we'll just update the UI
+    applyFiltersAndSort();
+}
+
 // Render job cards
 function renderJobCards(data) {
     const jobList = document.getElementById('jobList');
     jobList.innerHTML = data.map(job => `
-        <div class="job-card">
-            <div class="job-info">
-                <div class="company-name">${job.company}</div>
-                <div class="position-title">${job.position}</div>
-                <div class="job-meta">
-                    ${formatDate(job.applicationdate)} · ${job.location} · ${job.salary}
-                    ${job.applicationurl ? ` · <a href="${job.applicationurl}" target="_blank">View Application</a>` : ''}
+        <div class="job-card" data-job-id="${job.id}">
+            <div class="job-card-header">
+                <div class="job-info">
+                    <div class="company-name">${job.company}</div>
+                    <div class="position-title">${job.position}</div>
+                    <div class="job-meta">
+                        ${formatDate(job.applicationDate)} · ${job.location} · ${job.salaryRange}
+                        ${job.applicationUrl ? ` · <a href="${job.applicationUrl}" target="_blank">View Application</a>` : ''}
+                    </div>
+                </div>
+                <span class="status status-${job.status.toLowerCase().replace(/\s+/g, '')}">${job.status}</span>
+                <span class="priority priority-${job.priority.toLowerCase()}">${job.priority}</span>
+            </div>
+            
+            <div class="comments-section">
+                <div class="comments-header">
+                    <button class="comments-toggle" onclick="toggleComments('${job.id}')">
+                        💬 ${job.comments.length} Comments
+                    </button>
+                </div>
+                <div class="comment-list" id="comments-${job.id}" style="display: none;">
+                    ${formatComments(job.comments)}
+                    <div class="comment-form">
+                        <input type="text" class="comment-input" id="comment-input-${job.id}" placeholder="Add a comment...">
+                        <button class="add-comment-btn" onclick="handleAddComment('${job.id}')">Add</button>
+                    </div>
                 </div>
             </div>
-            <span class="status status-${job.status.toLowerCase().replace(/\s+/g, '')}">${job.status}</span>
-            <span class="priority priority-${job.priority.toLowerCase()}">${job.priority}</span>
         </div>
     `).join('');
+}
+
+// Toggle comments visibility
+function toggleComments(jobId) {
+    const commentsSection = document.getElementById(`comments-${jobId}`);
+    commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
+}
+
+// Handle adding a new comment
+function handleAddComment(jobId) {
+    const input = document.getElementById(`comment-input-${jobId}`);
+    const commentText = input.value.trim();
+    
+    if (commentText) {
+        addComment(jobId, commentText);
+        input.value = '';
+    }
 }
 
 // Format date for display

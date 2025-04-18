@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Search CRM</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Job Search Dashboard</h1>
+            
+            <!-- Stats Section -->
+            <div class="stats-container">
+                <div class="stat-card">
+                    <div class="stat-number" id="totalApplications">0</div>
+                    <div class="stat-label">Total Applications</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="activeApplications">0</div>
+                    <div class="stat-label">Active</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="interviewsScheduled">0</div>
+                    <div class="stat-label">Interviews</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number" id="offers">0</div>
+                    <div class="stat-label">Offers</div>
+                </div>
+            </div>
+
+            <!-- Graph Section -->
+            <div style="background-color: var(--secondary-color); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <canvas id="applicationChart"></canvas>
+            </div>
+
+            <!-- Filters -->
+            <div class="filters">
+                <div class="filter-group">
+                    <label for="statusFilter">Status:</label>
+                    <select id="statusFilter">
+                        <option value="">All</option>
+                        <option value="Applied">Applied</option>
+                        <option value="Interview Scheduled">Interview Scheduled</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Offer">Offer</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="locationFilter">Location:</label>
+                    <select id="locationFilter">
+                        <option value="">All</option>
+                        <option value="Remote">Remote</option>
+                        <option value="Office">Office</option>
+                        <option value="Hybrid">Hybrid</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label for="priorityFilter">Priority:</label>
+                    <select id="priorityFilter">
+                        <option value="">All</option>
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+                    </select>
+                </div>
+            </div>
+        </header>
+
+        <main>
+            <div class="job-list" id="jobList">
+                <!-- Job cards will be populated here -->
+            </div>
+        </main>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html> 

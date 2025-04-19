@@ -1,13 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+
 :root {
-    --primary-color: #1a1b1e;
-    --secondary-color: #2d2e32;
-    --text-color: #e4e5e7;
-    --border-color: #2d2e32;
-    --hover-color: #2d2e32;
-    --accent-color: #3498db;
-    --success-color: #4caf50;
-    --warning-color: #ff9800;
-    --danger-color: #f44336;
+    /* Surface Colors */
+    --surface-primary: #020D07;
+    --surface-secondary: rgba(27, 35, 30, 0.87);
+    --surface-blue: #3EDCFF;
+    --surface-yellow: #F5FF3E;
+    --surface-orange: #FFA23E;
+    --surface-pink: #FF3EFC;
+    --surface-green: #A4FE56;
+
+    /* Text Colors */
+    --text-blue: #2460E3;
+    --text-yellow: #E38A24;
+    --text-orange: #E32424;
+    --text-pink: #8E07A3;
+    --text-green: #2BA704;
+    --text-primary: #D7E4DD;
+    --text-secondary: rgba(255, 255, 255, 0.6);
+    --text-brand: #BAB60B;
+    --text-link: #00E76C;
 }
 
 * {
@@ -17,10 +29,10 @@
 }
 
 body {
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    font-family: 'IBM Plex Sans', sans-serif;
     line-height: 1.6;
-    color: var(--text-color);
-    background-color: var(--primary-color);
+    color: var(--text-primary);
+    background-color: var(--surface-primary);
 }
 
 .container {
@@ -34,9 +46,12 @@ header {
 }
 
 h1 {
-    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    font-size: 34px;
+    line-height: 40px;
+    font-weight: 600;
+    color: var(--text-primary);
     margin-bottom: 20px;
-    font-size: 1.5rem;
 }
 
 .stats-container {
@@ -47,21 +62,29 @@ h1 {
 }
 
 .stat-card {
-    background-color: var(--secondary-color);
+    background-color: var(--surface-secondary);
     padding: 15px;
     border-radius: 8px;
     text-align: center;
 }
 
 .stat-number {
-    font-size: 2rem;
-    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    font-size: 72px;
+    line-height: 80px;
+    font-weight: 600;
+    color: var(--text-primary);
     margin-bottom: 5px;
 }
 
 .stat-label {
-    font-size: 0.9rem;
-    color: #888;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--text-secondary);
+    display: flex;
+    align-items: center;
+    gap: 4px;
 }
 
 .filters {
@@ -79,10 +102,10 @@ h1 {
 
 select {
     padding: 8px;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--surface-secondary);
     border-radius: 4px;
-    background-color: var(--secondary-color);
-    color: var(--text-color);
+    background-color: var(--surface-secondary);
+    color: var(--text-primary);
     min-width: 150px;
 }
 
@@ -93,7 +116,7 @@ select {
 }
 
 .job-card {
-    background-color: var(--secondary-color);
+    background-color: var(--surface-secondary);
     border-radius: 8px;
     padding: 15px;
     display: flex;
@@ -115,18 +138,24 @@ select {
 }
 
 .company-name {
-    font-weight: bold;
-    color: var(--text-color);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 24px;
+    color: var(--text-primary);
 }
 
 .position-title {
-    color: #888;
-    font-size: 0.9rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 24px;
+    color: var(--text-secondary);
 }
 
 .job-meta {
-    color: #666;
-    font-size: 0.8rem;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--text-secondary);
 }
 
 /* Status badges */
@@ -140,23 +169,27 @@ select {
 }
 
 .status-applied {
-    background-color: rgba(52, 152, 219, 0.2);
-    color: #3498db;
+    background-color: rgba(62, 220, 255, 0.1);
+    border: 1px solid var(--surface-blue);
+    color: var(--text-blue);
 }
 
 .status-interview {
-    background-color: rgba(241, 196, 15, 0.2);
-    color: #f1c40f;
+    background-color: rgba(245, 255, 62, 0.1);
+    border: 1px solid var(--surface-yellow);
+    color: var(--text-yellow);
 }
 
 .status-rejected {
-    background-color: rgba(231, 76, 60, 0.2);
-    color: #e74c3c;
+    background-color: rgba(255, 62, 252, 0.1);
+    border: 1px solid var(--surface-pink);
+    color: var(--text-pink);
 }
 
 .status-offer {
-    background-color: rgba(46, 204, 113, 0.2);
-    color: #2ecc71;
+    background-color: rgba(164, 254, 86, 0.1);
+    border: 1px solid var(--surface-green);
+    color: var(--text-green);
 }
 
 /* Priority badges */
@@ -170,18 +203,47 @@ select {
 }
 
 .priority-high {
-    background-color: rgba(231, 76, 60, 0.2);
-    color: #e74c3c;
+    background-color: rgba(255, 162, 62, 0.1);
+    border: 1px solid var(--surface-orange);
+    color: var(--text-orange);
 }
 
 .priority-medium {
-    background-color: rgba(241, 196, 15, 0.2);
-    color: #f1c40f;
+    background-color: rgba(245, 255, 62, 0.1);
+    border: 1px solid var(--surface-yellow);
+    color: var(--text-yellow);
 }
 
 .priority-low {
-    background-color: rgba(46, 204, 113, 0.2);
-    color: #2ecc71;
+    background-color: rgba(164, 254, 86, 0.1);
+    border: 1px solid var(--surface-green);
+    color: var(--text-green);
+}
+
+/* Status-specific styling */
+.stat-cold {
+    background-color: rgba(62, 220, 255, 0.1);
+    border: 1px solid var(--surface-blue);
+}
+
+.stat-potential {
+    background-color: rgba(245, 255, 62, 0.1);
+    border: 1px solid var(--surface-yellow);
+}
+
+.stat-hot {
+    background-color: rgba(227, 36, 36, 0.1);
+    border: 1px solid var(--text-orange);
+}
+
+.stat-interviewing {
+    background-color: rgba(255, 62, 252, 0.1);
+    border: 1px solid var(--surface-pink);
+}
+
+.stat-offer {
+    background-color: rgba(164, 254, 86, 0.1);
+    border: 1px solid var(--surface-green);
 }
 
 /* Responsive design */
@@ -225,7 +287,7 @@ select {
 .comments-toggle {
     background: none;
     border: none;
-    color: var(--text-color);
+    color: var(--text-primary);
     cursor: pointer;
     font-size: 0.9rem;
     display: flex;
@@ -260,8 +322,10 @@ select {
 }
 
 .comment-text {
-    font-size: 0.9rem;
-    color: var(--text-color);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 24px;
+    color: var(--text-primary);
 }
 
 .comment-form {
@@ -276,17 +340,17 @@ select {
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 4px;
     padding: 8px;
-    color: var(--text-color);
+    color: var(--text-primary);
     font-size: 0.9rem;
 }
 
 .comment-input:focus {
     outline: none;
-    border-color: var(--accent-color);
+    border-color: var(--surface-blue);
 }
 
 .add-comment-btn {
-    background-color: var(--accent-color);
+    background-color: var(--surface-blue);
     color: white;
     border: none;
     border-radius: 4px;
@@ -297,4 +361,130 @@ select {
 
 .add-comment-btn:hover {
     background-color: #2980b9;
+}
+
+/* Update other text elements */
+.filter-group label {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--text-secondary);
+}
+
+/* Update link colors */
+a {
+    color: var(--text-link);
+}
+
+/* Update status badge colors */
+.status-applied {
+    color: var(--text-blue);
+}
+
+.status-interview {
+    color: var(--text-yellow);
+}
+
+.status-rejected {
+    color: var(--text-orange);
+}
+
+.status-offer {
+    color: var(--text-green);
+}
+
+/* Update priority badge colors */
+.priority-high {
+    color: var(--text-orange);
+}
+
+.priority-medium {
+    color: var(--text-yellow);
+}
+
+.priority-low {
+    color: var(--text-green);
+}
+
+.total-summary {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 17px;
+    line-height: 24px;
+    color: var(--text-secondary);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.total-summary .separator {
+    color: var(--text-secondary);
+    opacity: 0.5;
+}
+
+.total-summary span span {
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.update-count-btn {
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    cursor: pointer;
+    margin-left: 12px;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.update-count-btn:hover {
+    opacity: 1;
+}
+
+.update-form {
+    margin-top: 8px;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.update-form input {
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    width: 100px;
+}
+
+.update-form button {
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--text-secondary);
+    color: var(--text-primary);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: opacity 0.2s;
+}
+
+.update-form button:hover {
+    opacity: 1;
+}
+
+.update-form button:first-of-type {
+    background-color: var(--surface-green);
+    border-color: var(--surface-green);
+    color: var(--surface-primary);
 } 

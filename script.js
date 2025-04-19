@@ -2,6 +2,7 @@
 let jobData = [];
 let currentSort = { column: 'applicationDate', ascending: false };
 let applicationChart = null;
+let totalApplications = 0;
 
 // Fetch and parse JSON data
 async function loadJobData() {
@@ -12,6 +13,15 @@ async function loadJobData() {
         updateStats();
         updateChart();
         applyFiltersAndSort();
+        
+        // Update total opportunities
+        document.getElementById('totalOpportunities').textContent = jobData.length;
+        
+        // Load total applications from localStorage
+        const savedCount = localStorage.getItem('totalApplications');
+        if (savedCount) {
+            updateTotalApplications(parseInt(savedCount));
+        }
     } catch (error) {
         console.error('Error loading job data:', error);
         document.getElementById('jobList').innerHTML = '<div class="job-card">Error loading data. Please ensure data.json exists in the repository.</div>';
@@ -21,15 +31,17 @@ async function loadJobData() {
 // Update statistics
 function updateStats() {
     const stats = {
-        total: jobData.length,
-        active: jobData.filter(job => job.status === 'Applied').length,
-        interviews: jobData.filter(job => job.status === 'Interview Scheduled').length,
+        cold: jobData.filter(job => job.status === 'Cold').length,
+        potential: jobData.filter(job => job.status === 'Potential').length,
+        hot: jobData.filter(job => job.status === 'Hot').length,
+        interviewing: jobData.filter(job => job.status === 'Interviewing').length,
         offers: jobData.filter(job => job.status === 'Offer').length
     };
 
-    document.getElementById('totalApplications').textContent = stats.total;
-    document.getElementById('activeApplications').textContent = stats.active;
-    document.getElementById('interviewsScheduled').textContent = stats.interviews;
+    document.getElementById('coldApplications').textContent = stats.cold;
+    document.getElementById('potentialApplications').textContent = stats.potential;
+    document.getElementById('hotApplications').textContent = stats.hot;
+    document.getElementById('interviewsScheduled').textContent = stats.interviewing;
     document.getElementById('offers').textContent = stats.offers;
 }
 
@@ -236,6 +248,47 @@ function formatDate(dateStr) {
         day: 'numeric'
     });
 }
+
+// Function to update total applications
+function updateTotalApplications(count) {
+    totalApplications = count;
+    document.getElementById('totalApplications').textContent = count;
+    localStorage.setItem('totalApplications', count);
+}
+
+// Show update form
+function showUpdateForm() {
+    const form = document.getElementById('updateForm');
+    const input = document.getElementById('newApplicationCount');
+    form.style.display = 'flex';
+    input.value = totalApplications;
+    input.focus();
+}
+
+// Hide update form
+function hideUpdateForm() {
+    document.getElementById('updateForm').style.display = 'none';
+}
+
+// Update application count from form
+function updateApplicationCount() {
+    const input = document.getElementById('newApplicationCount');
+    const newCount = parseInt(input.value);
+    
+    if (!isNaN(newCount) && newCount >= 0) {
+        updateTotalApplications(newCount);
+        hideUpdateForm();
+    } else {
+        alert('Please enter a valid number');
+    }
+}
+
+// Handle Enter key in input
+document.getElementById('newApplicationCount').addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+        updateApplicationCount();
+    }
+});
 
 // Set up event listeners
 document.addEventListener('DOMContentLoaded', () => {

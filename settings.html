@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - Job Search CRM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <header class="settings-header">
+            <div class="header-content">
+                <h1>Settings</h1>
+                <a href="index.html" class="back-link">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+            </div>
+        </header>
+
+        <main class="settings-container">
+            <!-- Notification Settings -->
+            <section class="settings-section">
+                <h2><i class="fas fa-bell"></i> Notifications</h2>
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="emailNotifications" checked>
+                            Email Notifications
+                        </label>
+                        <span class="setting-description">Receive email updates about your applications</span>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="reminderNotifications" checked>
+                            Reminder Notifications
+                        </label>
+                        <span class="setting-description">Get reminders for follow-ups and interviews</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Display Settings -->
+            <section class="settings-section">
+                <h2><i class="fas fa-palette"></i> Display</h2>
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <label>Theme</label>
+                        <select id="themeSelect">
+                            <option value="dark">Dark</option>
+                            <option value="light">Light</option>
+                            <option value="system">System</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Default Sort</label>
+                        <select id="defaultSort">
+                            <option value="date">Application Date</option>
+                            <option value="company">Company Name</option>
+                            <option value="status">Status</option>
+                            <option value="priority">Priority</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Application Settings -->
+            <section class="settings-section">
+                <h2><i class="fas fa-file-alt"></i> Applications</h2>
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <label>Default Status</label>
+                        <select id="defaultStatus">
+                            <option value="Cold">Cold</option>
+                            <option value="Potential">Potential</option>
+                            <option value="Hot">Hot</option>
+                            <option value="Interviewing">Interviewing</option>
+                            <option value="Offer">Offer</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>Default Priority</label>
+                        <select id="defaultPriority">
+                            <option value="High">High</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Data Management -->
+            <section class="settings-section">
+                <h2><i class="fas fa-database"></i> Data Management</h2>
+                <div class="settings-group">
+                    <div class="setting-item">
+                        <button class="export-btn" onclick="exportData()">
+                            <i class="fas fa-download"></i>
+                            Export Data
+                        </button>
+                        <span class="setting-description">Download your job applications data</span>
+                    </div>
+                    <div class="setting-item">
+                        <button class="import-btn" onclick="importData()">
+                            <i class="fas fa-upload"></i>
+                            Import Data
+                        </button>
+                        <span class="setting-description">Import job applications from a file</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Save Button -->
+            <div class="settings-actions">
+                <button class="save-settings-btn" onclick="saveSettings()">
+                    <i class="fas fa-save"></i>
+                    Save Settings
+                </button>
+            </div>
+        </main>
+    </div>
+    <script src="settings.js"></script>
+</body>
+</html> 

@@ -5,12 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Job Search CRM</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Job Search Dashboard</h1>
+            <div class="header-content">
+                <h1>Job Search Dashboard</h1>
+                <div class="header-buttons">
+                    <a href="settings.html" class="header-button">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <button class="header-button">
+                        <i class="fas fa-user"></i>
+                        <span>Profile</span>
+                    </button>
+                </div>
+            </div>
             <div class="total-summary">
                 <span>Total Opportunities: <span id="totalOpportunities">0</span></span>
                 <span class="separator">|</span>

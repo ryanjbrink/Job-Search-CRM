@@ -45,6 +45,13 @@ header {
     margin-bottom: 30px;
 }
 
+.header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
 h1 {
     font-family: 'Inter', sans-serif;
     font-size: 34px;
@@ -642,4 +649,187 @@ a {
 
 .application-link:hover {
     text-decoration: underline;
+}
+
+.header-buttons {
+    display: flex;
+    gap: 12px;
+}
+
+.header-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--text-secondary);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.header-button:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--text-link);
+}
+
+.header-button i {
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+    }
+    
+    .header-buttons {
+        width: 100%;
+        justify-content: flex-end;
+    }
+}
+
+/* Settings Page Styles */
+.settings-header {
+    margin-bottom: 30px;
+}
+
+.settings-header .header-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.settings-container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.settings-section {
+    background-color: var(--surface-secondary);
+    border-radius: 8px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.settings-section h2 {
+    font-family: 'Inter', sans-serif;
+    font-size: 20px;
+    line-height: 28px;
+    margin-bottom: 20px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.settings-group {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.setting-item {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.setting-item label {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--text-primary);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.setting-description {
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    color: var(--text-secondary);
+}
+
+.setting-item select {
+    background-color: var(--surface-primary);
+    border: 1px solid var(--text-secondary);
+    border-radius: 6px;
+    padding: 8px 12px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    max-width: 300px;
+}
+
+.setting-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--text-link);
+}
+
+.export-btn, .import-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background-color: var(--surface-secondary);
+    border: 1px solid var(--text-secondary);
+    border-radius: 6px;
+    color: var(--text-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+.export-btn:hover, .import-btn:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-color: var(--text-link);
+}
+
+.settings-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 32px;
+}
+
+.save-settings-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background-color: var(--text-link);
+    border: none;
+    border-radius: 6px;
+    color: var(--surface-primary);
+    font-family: 'IBM Plex Sans', sans-serif;
+    font-size: 13px;
+    line-height: 15px;
+    cursor: pointer;
+}
+
+.save-settings-btn:hover {
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .settings-section {
+        padding: 16px;
+    }
+    
+    .setting-item select {
+        max-width: 100%;
+    }
+    
+    .settings-actions {
+        justify-content: center;
+    }
 } 

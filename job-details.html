@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Job Details - Job Search CRM</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Job Details</h1>
+            <a href="index.html" class="back-link">← Back to Dashboard</a>
+        </header>
+
+        <main>
+            <div class="job-details-card">
+                <div class="job-details-header">
+                    <div class="job-info">
+                        <div class="company-name" id="companyName"></div>
+                        <div class="position-title" id="positionTitle"></div>
+                        <div class="job-meta">
+                            <span id="applicationDate"></span>
+                            <span class="separator">·</span>
+                            <span id="location"></span>
+                            <span class="separator">·</span>
+                            <span id="salaryRange"></span>
+                        </div>
+                    </div>
+                    <div class="job-status">
+                        <span class="status" id="statusBadge"></span>
+                        <span class="priority" id="priorityBadge"></span>
+                    </div>
+                </div>
+
+                <div class="job-details-content">
+                    <div class="details-section">
+                        <h2>Application Details</h2>
+                        <div class="details-grid">
+                            <div class="detail-item">
+                                <span class="detail-label">Application URL:</span>
+                                <a href="#" id="applicationUrl" target="_blank">View Application</a>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Next Steps:</span>
+                                <span id="nextSteps"></span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">Notes:</span>
+                                <span id="notes"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comments-section">
+                        <h2>Comments</h2>
+                        <div class="comment-list" id="commentList"></div>
+                        <div class="comment-form">
+                            <input type="text" class="comment-input" id="newComment" placeholder="Add a comment...">
+                            <button class="add-comment-btn" onclick="addComment()">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="job-details.js"></script>
+</body>
+</html> 

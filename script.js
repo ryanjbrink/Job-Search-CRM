@@ -189,14 +189,14 @@ async function addComment(jobId, commentText) {
 function renderJobCards(data) {
     const jobList = document.getElementById('jobList');
     jobList.innerHTML = data.map(job => `
-        <div class="job-card" data-job-id="${job.id}">
+        <div class="job-card" data-job-id="${job.id}" onclick="window.location.href='job-details.html?id=${job.id}'">
             <div class="job-card-header">
                 <div class="job-info">
                     <div class="company-name">${job.company}</div>
                     <div class="position-title">${job.position}</div>
                     <div class="job-meta">
                         ${formatDate(job.applicationDate)} · ${job.location} · ${job.salaryRange}
-                        ${job.applicationUrl ? ` · <a href="${job.applicationUrl}" target="_blank">View Application</a>` : ''}
+                        ${job.applicationUrl ? ` · <a href="${job.applicationUrl}" target="_blank" onclick="event.stopPropagation()">View Application</a>` : ''}
                     </div>
                 </div>
                 <span class="status status-${job.status.toLowerCase().replace(/\s+/g, '')}">${job.status}</span>
@@ -205,15 +205,15 @@ function renderJobCards(data) {
             
             <div class="comments-section">
                 <div class="comments-header">
-                    <button class="comments-toggle" onclick="toggleComments('${job.id}')">
+                    <button class="comments-toggle" onclick="event.stopPropagation(); toggleComments('${job.id}')">
                         💬 ${job.comments.length} Comments
                     </button>
                 </div>
                 <div class="comment-list" id="comments-${job.id}" style="display: none;">
                     ${formatComments(job.comments)}
                     <div class="comment-form">
-                        <input type="text" class="comment-input" id="comment-input-${job.id}" placeholder="Add a comment...">
-                        <button class="add-comment-btn" onclick="handleAddComment('${job.id}')">Add</button>
+                        <input type="text" class="comment-input" id="comment-input-${job.id}" placeholder="Add a comment..." onclick="event.stopPropagation()">
+                        <button class="add-comment-btn" onclick="event.stopPropagation(); handleAddComment('${job.id}')">Add</button>
                     </div>
                 </div>
             </div>

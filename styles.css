@@ -169,35 +169,54 @@ select {
 /* Status badges */
 .status {
     padding: 4px 12px;
-    border-radius: 12px;
-    font-size: 0.8rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
     font-weight: 500;
-    text-align: center;
-    min-width: 100px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    white-space: nowrap;
+    justify-content: center;
+    transition: all 0.2s ease;
+    border-width: 2px;
+    border-style: solid;
 }
 
-.status-applied {
-    background-color: rgba(62, 220, 255, 0.1);
-    border: 1px solid var(--surface-blue);
-    color: var(--text-blue);
+.status-cold {
+    background-color: rgba(62, 220, 255, 0.15);
+    color: rgba(62, 220, 255, 1);
+    border-color: rgba(62, 220, 255, 1);
 }
 
-.status-interview {
-    background-color: rgba(245, 255, 62, 0.1);
-    border: 1px solid var(--surface-yellow);
-    color: var(--text-yellow);
+.status-potential {
+    background-color: rgba(245, 255, 62, 0.15);
+    color: rgba(245, 255, 62, 1);
+    border-color: rgba(245, 255, 62, 1);
 }
 
-.status-rejected {
-    background-color: rgba(255, 62, 252, 0.1);
-    border: 1px solid var(--surface-pink);
-    color: var(--text-pink);
+.status-hot {
+    background-color: rgba(255, 162, 62, 0.15);
+    color: rgba(255, 162, 62, 1);
+    border-color: rgba(255, 162, 62, 1);
+}
+
+.status-interviewing {
+    background-color: rgba(255, 62, 252, 0.15);
+    color: rgba(255, 62, 252, 1);
+    border-color: rgba(255, 62, 252, 1);
 }
 
 .status-offer {
-    background-color: rgba(164, 254, 86, 0.1);
-    border: 1px solid var(--surface-green);
-    color: var(--text-green);
+    background-color: rgba(164, 254, 86, 0.15);
+    color: rgba(164, 254, 86, 1);
+    border-color: rgba(164, 254, 86, 1);
+}
+
+/* Hover effects */
+.status:hover {
+    opacity: 0.9;
+    transform: translateY(-1px);
 }
 
 /* Priority badges */
@@ -226,32 +245,6 @@ select {
     background-color: rgba(164, 254, 86, 0.1);
     border: 1px solid var(--surface-green);
     color: var(--text-green);
-}
-
-/* Status-specific styling */
-.stat-cold {
-    background-color: rgba(62, 220, 255, 0.1);
-    border: 1px solid var(--surface-blue);
-}
-
-.stat-potential {
-    background-color: rgba(245, 255, 62, 0.1);
-    border: 1px solid var(--surface-yellow);
-}
-
-.stat-hot {
-    background-color: rgba(227, 36, 36, 0.1);
-    border: 1px solid var(--text-orange);
-}
-
-.stat-interviewing {
-    background-color: rgba(255, 62, 252, 0.1);
-    border: 1px solid var(--surface-pink);
-}
-
-.stat-offer {
-    background-color: rgba(164, 254, 86, 0.1);
-    border: 1px solid var(--surface-green);
 }
 
 /* Responsive design */

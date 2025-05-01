@@ -99,6 +99,26 @@
           "text": "Submitted application and coding challenge"
         }
       ]
+    },
+    {
+      "id": "5",
+      "company": "Innovation Labs",
+      "position": "Senior Frontend Developer",
+      "applicationDate": "2024-03-16",
+      "status": "Hot",
+      "location": "Remote",
+      "salaryRange": "$120k-$150k",
+      "applicationUrl": "https://innovationlabs.com/careers",
+      "notes": "Modern tech stack, great benefits",
+      "nextSteps": "Technical interview next week",
+      "priority": "High",
+      "comments": [
+        {
+          "id": "5a",
+          "date": "2024-03-16T09:00:00",
+          "text": "Applied with referral from current employee"
+        }
+      ]
     }
   ]
 } 

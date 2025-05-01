@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
 </head>
 <body>
     <div class="container">
@@ -36,34 +37,10 @@
                 <button onclick="updateApplicationCount()">Save</button>
                 <button onclick="hideUpdateForm()">Cancel</button>
             </div>
-            
-            <!-- Stats Section -->
-            <div class="stats-container">
-                <div class="stat-card stat-cold">
-                    <div class="stat-number" id="coldApplications">0</div>
-                    <div class="stat-label">❄️ Cold</div>
-                </div>
-                <div class="stat-card stat-potential">
-                    <div class="stat-number" id="potentialApplications">0</div>
-                    <div class="stat-label">🤔 Potential</div>
-                </div>
-                <div class="stat-card stat-hot">
-                    <div class="stat-number" id="hotApplications">0</div>
-                    <div class="stat-label">🔥 Hot</div>
-                </div>
-                <div class="stat-card stat-interviewing">
-                    <div class="stat-number" id="interviewsScheduled">0</div>
-                    <div class="stat-label">🎤 Interviewing</div>
-                </div>
-                <div class="stat-card stat-offer">
-                    <div class="stat-number" id="offers">0</div>
-                    <div class="stat-label">💰 Offer</div>
-                </div>
-            </div>
 
             <!-- Graph Section -->
-            <div style="background-color: var(--secondary-color); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                <canvas id="applicationChart"></canvas>
+            <div style="background-color: var(--surface-secondary); padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                <canvas id="applicationChart" style="height: 300px;"></canvas>
             </div>
 
             <!-- Filters -->
@@ -72,9 +49,10 @@
                     <label for="statusFilter">Status:</label>
                     <select id="statusFilter">
                         <option value="">All</option>
-                        <option value="Applied">Applied</option>
-                        <option value="Interview Scheduled">Interview Scheduled</option>
-                        <option value="Rejected">Rejected</option>
+                        <option value="Cold">Cold</option>
+                        <option value="Potential">Potential</option>
+                        <option value="Hot">Hot</option>
+                        <option value="Interviewing">Interviewing</option>
                         <option value="Offer">Offer</option>
                     </select>
                 </div>
@@ -85,15 +63,6 @@
                         <option value="Remote">Remote</option>
                         <option value="Office">Office</option>
                         <option value="Hybrid">Hybrid</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label for="priorityFilter">Priority:</label>
-                    <select id="priorityFilter">
-                        <option value="">All</option>
-                        <option value="High">High</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Low">Low</option>
                     </select>
                 </div>
             </div>

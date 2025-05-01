@@ -4,13 +4,15 @@ let currentSort = { column: 'applicationDate', ascending: false };
 let applicationChart = null;
 let totalApplications = 0;
 
+// Register Chart.js plugins
+Chart.register(ChartDataLabels);
+
 // Fetch and parse JSON data
 async function loadJobData() {
     try {
         const response = await fetch('data.json');
         const data = await response.json();
         jobData = data.jobs;
-        updateStats();
         updateChart();
         applyFiltersAndSort();
         
@@ -49,23 +51,17 @@ function updateStats() {
 function updateChart() {
     const ctx = document.getElementById('applicationChart').getContext('2d');
     
-    // Group applications by date
-    const applicationsByDate = {};
-    jobData.forEach(job => {
-        const date = job.applicationDate;
-        applicationsByDate[date] = (applicationsByDate[date] || 0) + 1;
-    });
+    // Count applications by status
+    const statusCounts = {
+        '❄️ Cold': jobData.filter(job => job.status === 'Cold').length,
+        '🤔 Potential': jobData.filter(job => job.status === 'Potential').length,
+        '🔥 Hot': jobData.filter(job => job.status === 'Hot').length,
+        '🎤 Interviewing': jobData.filter(job => job.status === 'Interviewing').length,
+        '💰 Offer': jobData.filter(job => job.status === 'Offer').length
+    };
 
-    // Sort dates and prepare data
-    const dates = Object.keys(applicationsByDate).sort();
-    const counts = dates.map(date => applicationsByDate[date]);
-
-    // Calculate cumulative applications
-    const cumulativeData = counts.reduce((acc, count, i) => {
-        const prev = i > 0 ? acc[i - 1] : 0;
-        acc.push(prev + count);
-        return acc;
-    }, []);
+    // Find the maximum value for scaling
+    const maxValue = Math.max(...Object.values(statusCounts));
 
     // Destroy existing chart if it exists
     if (applicationChart) {
@@ -74,16 +70,29 @@ function updateChart() {
 
     // Create new chart
     applicationChart = new Chart(ctx, {
-        type: 'line',
+        type: 'bar',
         data: {
-            labels: dates.map(date => formatDate(date)),
+            labels: Object.keys(statusCounts),
             datasets: [{
-                label: 'Total Applications',
-                data: cumulativeData,
-                borderColor: '#3498db',
-                backgroundColor: 'rgba(52, 152, 219, 0.1)',
-                tension: 0.4,
-                fill: true
+                label: 'Number of Opportunities',
+                data: Object.values(statusCounts),
+                backgroundColor: [
+                    'rgba(62, 220, 255, 0.7)',    // Cold - Blue
+                    'rgba(245, 255, 62, 0.7)',    // Potential - Yellow
+                    'rgba(255, 162, 62, 0.7)',    // Hot - Orange
+                    'rgba(255, 62, 252, 0.7)',    // Interviewing - Pink
+                    'rgba(164, 254, 86, 0.7)'     // Offer - Green
+                ],
+                borderColor: [
+                    'rgba(62, 220, 255, 1)',
+                    'rgba(245, 255, 62, 1)',
+                    'rgba(255, 162, 62, 1)',
+                    'rgba(255, 62, 252, 1)',
+                    'rgba(164, 254, 86, 1)'
+                ],
+                borderWidth: 2,
+                borderRadius: 5,
+                barThickness: 40
             }]
         },
         options: {
@@ -92,24 +101,49 @@ function updateChart() {
             plugins: {
                 legend: {
                     display: false
+                },
+                title: {
+                    display: false
+                },
+                datalabels: {
+                    color: '#D7E4DD',
+                    font: {
+                        family: 'IBM Plex Sans',
+                        size: 14,
+                        weight: 'bold'
+                    },
+                    anchor: 'end',
+                    align: 'top',
+                    offset: -5
                 }
             },
             scales: {
                 y: {
                     beginAtZero: true,
+                    max: maxValue + 1,
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
+                        color: 'rgba(255, 255, 255, 0.1)',
+                        drawBorder: false
                     },
                     ticks: {
-                        color: '#888'
+                        stepSize: 1,
+                        color: '#888',
+                        font: {
+                            family: 'IBM Plex Sans',
+                            size: 12
+                        }
                     }
                 },
                 x: {
                     grid: {
-                        color: 'rgba(255, 255, 255, 0.1)'
+                        display: false
                     },
                     ticks: {
-                        color: '#888'
+                        color: '#888',
+                        font: {
+                            family: 'IBM Plex Sans',
+                            size: 12
+                        }
                     }
                 }
             }
@@ -124,16 +158,12 @@ function applyFiltersAndSort() {
     // Apply filters
     const statusFilter = document.getElementById('statusFilter').value;
     const locationFilter = document.getElementById('locationFilter').value;
-    const priorityFilter = document.getElementById('priorityFilter').value;
     
     if (statusFilter) {
         filteredData = filteredData.filter(job => job.status === statusFilter);
     }
     if (locationFilter) {
         filteredData = filteredData.filter(job => job.location === locationFilter);
-    }
-    if (priorityFilter) {
-        filteredData = filteredData.filter(job => job.priority === priorityFilter);
     }
     
     // Apply sorting
@@ -185,6 +215,24 @@ async function addComment(jobId, commentText) {
     applyFiltersAndSort();
 }
 
+// Get status icon
+function getStatusIcon(status) {
+    switch(status) {
+        case 'Cold':
+            return '❄️';
+        case 'Potential':
+            return '🤔';
+        case 'Hot':
+            return '🔥';
+        case 'Interviewing':
+            return '🎤';
+        case 'Offer':
+            return '💰';
+        default:
+            return '';
+    }
+}
+
 // Render job cards
 function renderJobCards(data) {
     const jobList = document.getElementById('jobList');
@@ -199,8 +247,7 @@ function renderJobCards(data) {
                         ${job.applicationUrl ? ` · <a href="${job.applicationUrl}" target="_blank" onclick="event.stopPropagation()">View Application</a>` : ''}
                     </div>
                 </div>
-                <span class="status status-${job.status.toLowerCase().replace(/\s+/g, '')}">${job.status}</span>
-                <span class="priority priority-${job.priority.toLowerCase()}">${job.priority}</span>
+                <span class="status status-${job.status.toLowerCase().replace(/\s+/g, '')}">${getStatusIcon(job.status)} ${job.status}</span>
             </div>
             
             <div class="comments-section">

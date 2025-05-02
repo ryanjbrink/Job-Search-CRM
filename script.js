@@ -12,7 +12,17 @@ async function loadJobData() {
     try {
         const response = await fetch('data.json');
         const data = await response.json();
-        jobData = data.jobs;
+        
+        // Add missing fields to each job
+        jobData = data.jobs.map((job, index) => {
+            return {
+                id: `job-${index + 1}`,
+                dateEntered: new Date().toISOString(),
+                actions: [],
+                ...job
+            };
+        });
+        
         updateChart();
         applyFiltersAndSort();
         

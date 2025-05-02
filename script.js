@@ -255,13 +255,13 @@ function createJobCard(job) {
             <div class="job-info">
                 <div class="date-entered">${formatDate(job.dateEntered)}</div>
                 <div class="title-container">
-                    <div class="title-row">
-                        <div class="company-title">${job.company} | ${job.jobTitle}</div>
-                        <a href="${job.applicationLink}" class="application-link" onclick="event.stopPropagation()">Link</a>
-                    </div>
+                    <div class="company-title">${job.company} | ${job.jobTitle}</div>
                 </div>
             </div>
-            <span class="status status-${job.status.toLowerCase()}">${getStatusIcon(job.status)} ${job.status}</span>
+            <div class="header-right">
+                <a href="${job.applicationLink}" class="application-link" onclick="event.stopPropagation()">Link</a>
+                <span class="status status-${job.status.toLowerCase()}">${getStatusIcon(job.status)} ${job.status}</span>
+            </div>
         </div>
         
         <div class="detail-row">

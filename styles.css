@@ -139,13 +139,6 @@ select:focus {
     background-color: var(--apple-surface);
     border-radius: 16px;
     padding: 24px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.job-card:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
-    background-color: var(--apple-surface-2);
 }
 
 .job-card-header {
@@ -153,6 +146,12 @@ select:focus {
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: 16px;
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .company-title {

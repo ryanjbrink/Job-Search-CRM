@@ -257,7 +257,7 @@ function createJobCard(job) {
                 <div class="title-container">
                     <div class="title-row">
                         <div class="company-title">${job.company} | ${job.jobTitle}</div>
-                        <a href="${job.applicationLink}" class="application-link">Link</a>
+                        <a href="${job.applicationLink}" class="application-link" onclick="event.stopPropagation()">Link</a>
                     </div>
                 </div>
             </div>
@@ -273,16 +273,85 @@ function createJobCard(job) {
             <div class="detail-text">${job.about || 'Not specified'}</div>
         </div>
         
-        <div class="detail-row">
-            <div class="actions-count">${job.actions ? job.actions.length : 0} Actions</div>
+        <div class="detail-row actions-header">
+            <div class="actions-count">
+                <span>${job.actions ? job.actions.length : 0} Actions</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <div class="actions-content" style="display: none;">
+            <div class="action-list">
+                ${job.actions ? job.actions.map(action => `
+                    <div class="action">
+                        <div class="action-header">${formatDate(action.date)}</div>
+                        <div class="action-text">${action.text}</div>
+                    </div>
+                `).join('') : '<div class="no-actions">No actions yet</div>'}
+            </div>
+            <div class="action-form">
+                <input type="text" class="action-input" placeholder="Add an action...">
+                <button class="add-action-btn" onclick="addAction(event, '${job.id}')">Add</button>
+            </div>
         </div>
     `;
+
+    // Add click handler for expanding/collapsing
+    const actionsHeader = jobCard.querySelector('.actions-header');
+    const actionsContent = jobCard.querySelector('.actions-content');
     
-    jobCard.addEventListener('click', () => {
-        window.location.href = `job-details.html?id=${job.id}`;
+    actionsHeader.addEventListener('click', () => {
+        const isExpanded = actionsContent.style.display !== 'none';
+        actionsContent.style.display = isExpanded ? 'none' : 'block';
+        const icon = actionsHeader.querySelector('i');
+        icon.style.transform = isExpanded ? 'rotate(0deg)' : 'rotate(180deg)';
     });
-    
+
     return jobCard;
+}
+
+// Add new action
+async function addAction(event, jobId) {
+    event.stopPropagation(); // Prevent card from collapsing when clicking the button
+    const card = event.target.closest('.job-card');
+    const input = card.querySelector('.action-input');
+    const actionText = input.value.trim();
+    
+    if (actionText) {
+        const newAction = {
+            date: new Date().toISOString(),
+            text: actionText
+        };
+
+        try {
+            const response = await fetch('data.json');
+            const data = await response.json();
+            const job = data.jobs.find(j => j.id === jobId);
+            
+            if (job) {
+                if (!job.actions) {
+                    job.actions = [];
+                }
+                job.actions.push(newAction);
+                
+                // Update the display
+                const actionList = card.querySelector('.action-list');
+                const actionsCount = card.querySelector('.actions-count span');
+                
+                actionList.innerHTML = job.actions.map(action => `
+                    <div class="action">
+                        <div class="action-header">${formatDate(action.date)}</div>
+                        <div class="action-text">${action.text}</div>
+                    </div>
+                `).join('');
+                
+                actionsCount.textContent = `${job.actions.length} Actions`;
+                input.value = '';
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    }
 }
 
 // Format date for display

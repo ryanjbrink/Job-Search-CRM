@@ -236,53 +236,53 @@ function getStatusIcon(status) {
 // Render job cards
 function renderJobCards(data) {
     const jobList = document.getElementById('jobList');
-    jobList.innerHTML = data.map(job => `
-        <div class="job-card" data-job-id="${job.id}" onclick="window.location.href='job-details.html?id=${job.id}'">
-            <div class="job-card-header">
-                <div class="job-info">
-                    <div class="company-name">${job.company}</div>
-                    <div class="position-title">${job.position}</div>
-                    <div class="job-meta">
-                        ${formatDate(job.applicationDate)} · ${job.location} · ${job.salaryRange}
-                        ${job.applicationUrl ? ` · <a href="${job.applicationUrl}" target="_blank" onclick="event.stopPropagation()">View Application</a>` : ''}
-                    </div>
-                </div>
-                <span class="status status-${job.status.toLowerCase().replace(/\s+/g, '')}">${getStatusIcon(job.status)} ${job.status}</span>
-            </div>
-            
-            <div class="comments-section">
-                <div class="comments-header">
-                    <button class="comments-toggle" onclick="event.stopPropagation(); toggleComments('${job.id}')">
-                        💬 ${job.comments.length} Comments
-                    </button>
-                </div>
-                <div class="comment-list" id="comments-${job.id}" style="display: none;">
-                    ${formatComments(job.comments)}
-                    <div class="comment-form">
-                        <input type="text" class="comment-input" id="comment-input-${job.id}" placeholder="Add a comment..." onclick="event.stopPropagation()">
-                        <button class="add-comment-btn" onclick="event.stopPropagation(); handleAddComment('${job.id}')">Add</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    `).join('');
-}
-
-// Toggle comments visibility
-function toggleComments(jobId) {
-    const commentsSection = document.getElementById(`comments-${jobId}`);
-    commentsSection.style.display = commentsSection.style.display === 'none' ? 'block' : 'none';
-}
-
-// Handle adding a new comment
-function handleAddComment(jobId) {
-    const input = document.getElementById(`comment-input-${jobId}`);
-    const commentText = input.value.trim();
+    // Clear existing content
+    jobList.innerHTML = '';
     
-    if (commentText) {
-        addComment(jobId, commentText);
-        input.value = '';
-    }
+    // Append each job card
+    data.forEach(job => {
+        const jobCard = createJobCard(job);
+        jobList.appendChild(jobCard);
+    });
+}
+
+function createJobCard(job) {
+    const jobCard = document.createElement('div');
+    jobCard.className = 'job-card';
+    
+    jobCard.innerHTML = `
+        <div class="job-card-header">
+            <div class="job-info">
+                <div class="date-entered">${formatDate(job.dateEntered)}</div>
+                <div class="title-container">
+                    <div class="title-row">
+                        <div class="company-title">${job.company} | ${job.jobTitle}</div>
+                        <a href="${job.applicationLink}" class="application-link">Link</a>
+                    </div>
+                </div>
+            </div>
+            <span class="status status-${job.status.toLowerCase()}">${getStatusIcon(job.status)} ${job.status}</span>
+        </div>
+        
+        <div class="detail-row">
+            <div class="detail-chip">${job.location || 'Unknown'}</div>
+            <div class="detail-chip">${job.salary || 'Unknown'}</div>
+        </div>
+        
+        <div class="detail-row">
+            <div class="detail-text">${job.about || 'Not specified'}</div>
+        </div>
+        
+        <div class="detail-row">
+            <div class="actions-count">${job.actions ? job.actions.length : 0} Actions</div>
+        </div>
+    `;
+    
+    jobCard.addEventListener('click', () => {
+        window.location.href = `job-details.html?id=${job.id}`;
+    });
+    
+    return jobCard;
 }
 
 // Format date for display
@@ -290,8 +290,7 @@ function formatDate(dateStr) {
     if (!dateStr) return '';
     const date = new Date(dateStr);
     return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
+        month: 'long',
         day: 'numeric'
     });
 }
@@ -346,4 +345,31 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('select').forEach(select => {
         select.addEventListener('change', applyFiltersAndSort);
     });
-}); 
+});
+
+// Take screenshot of the current page
+function takeScreenshot() {
+    // Show loading indicator
+    const button = document.querySelector('.header-button:nth-child(2)');
+    const originalIcon = button.innerHTML;
+    button.innerHTML = '<i class="fas fa-spinner fa-spin"></i><span>Capturing...</span>';
+    
+    // Take screenshot
+    html2canvas(document.querySelector('.container')).then(canvas => {
+        // Convert to image
+        const image = canvas.toDataURL('image/png');
+        
+        // Create download link
+        const link = document.createElement('a');
+        link.download = `job-search-report-${new Date().toISOString().split('T')[0]}.png`;
+        link.href = image;
+        link.click();
+        
+        // Restore button
+        button.innerHTML = originalIcon;
+    }).catch(error => {
+        console.error('Error taking screenshot:', error);
+        alert('Error taking screenshot. Please try again.');
+        button.innerHTML = originalIcon;
+    });
+} 

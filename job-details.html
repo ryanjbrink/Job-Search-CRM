@@ -23,49 +23,48 @@
 
         <main>
             <div class="job-details-card">
-                <div class="job-details-header">
+                <div class="job-card-header">
                     <div class="job-info">
                         <div class="company-name" id="companyName"></div>
-                        <div class="position-title" id="positionTitle"></div>
+                        <div class="position-title" id="jobTitle"></div>
                         <div class="job-meta">
-                            <span id="applicationDate"></span>
+                            <span id="dateEntered"></span>
                             <span class="separator">·</span>
                             <span id="location"></span>
                             <span class="separator">·</span>
-                            <span id="salaryRange"></span>
+                            <span id="salary"></span>
+                            <span class="separator">·</span>
+                            <a href="#" id="applicationLink" target="_blank">View Application</a>
                         </div>
                     </div>
-                    <div class="job-status">
-                        <span class="status" id="statusBadge"></span>
-                        <span class="priority" id="priorityBadge"></span>
-                    </div>
+                    <span class="status" id="statusBadge"></span>
                 </div>
 
                 <div class="job-details-content">
                     <div class="details-section">
-                        <h2>Application Details</h2>
+                        <h2>Job Details</h2>
                         <div class="details-grid">
                             <div class="detail-item">
-                                <span class="detail-label">Application URL:</span>
-                                <a href="#" id="applicationUrl" target="_blank">View Application</a>
+                                <span class="detail-label">About:</span>
+                                <span id="about"></span>
                             </div>
                             <div class="detail-item">
-                                <span class="detail-label">Next Steps:</span>
-                                <span id="nextSteps"></span>
-                            </div>
-                            <div class="detail-item">
-                                <span class="detail-label">Notes:</span>
-                                <span id="notes"></span>
+                                <span class="detail-label">Connection:</span>
+                                <span id="connection"></span>
                             </div>
                         </div>
                     </div>
 
-                    <div class="comments-section">
-                        <h2>Comments</h2>
-                        <div class="comment-list" id="commentList"></div>
-                        <div class="comment-form">
-                            <input type="text" class="comment-input" id="newComment" placeholder="Add a comment...">
-                            <button class="add-comment-btn" onclick="addComment()">Add</button>
+                    <div class="actions-section">
+                        <div class="actions-header">
+                            <button class="actions-toggle" onclick="toggleActions()">
+                                📝 Actions
+                            </button>
+                        </div>
+                        <div class="action-list" id="actionList"></div>
+                        <div class="action-form">
+                            <input type="text" class="action-input" id="newAction" placeholder="Add an action...">
+                            <button class="add-action-btn" onclick="addAction()">Add</button>
                         </div>
                     </div>
                 </div>

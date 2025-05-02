@@ -20,91 +20,129 @@ async function loadJobDetails() {
     }
 }
 
+// Get status icon
+function getStatusIcon(status) {
+    switch(status) {
+        case 'Cold':
+            return '❄️';
+        case 'Potential':
+            return '🤔';
+        case 'Hot':
+            return '🔥';
+        case 'Interviewing':
+            return '🎤';
+        case 'Offer':
+            return '💰';
+        default:
+            return '';
+    }
+}
+
 // Display job details
 function displayJobDetails(job) {
     // Update header information
     document.getElementById('companyName').textContent = job.company;
-    document.getElementById('positionTitle').textContent = job.position;
-    document.getElementById('applicationDate').textContent = formatDate(job.applicationDate);
+    document.getElementById('jobTitle').textContent = job.title;
+    document.getElementById('dateEntered').textContent = job.dateEntered;
     document.getElementById('location').textContent = job.location;
-    document.getElementById('salaryRange').textContent = job.salaryRange;
+    document.getElementById('salary').textContent = job.salary;
+    document.getElementById('about').textContent = job.about;
+    document.getElementById('connection').textContent = job.connection;
+    document.getElementById('applicationLink').href = job.applicationLink;
     
-    // Update status and priority badges
-    document.getElementById('statusBadge').textContent = job.status;
-    document.getElementById('statusBadge').className = `status status-${job.status.toLowerCase().replace(/\s+/g, '')}`;
-    document.getElementById('priorityBadge').textContent = job.priority;
-    document.getElementById('priorityBadge').className = `priority priority-${job.priority.toLowerCase()}`;
+    // Update status badge
+    const statusBadge = document.getElementById('statusBadge');
+    statusBadge.textContent = `${getStatusIcon(job.status)} ${job.status}`;
+    statusBadge.className = `status status-${job.status.toLowerCase().replace(/\s+/g, '')}`;
     
-    // Update details
-    document.getElementById('applicationUrl').href = job.applicationUrl;
-    document.getElementById('nextSteps').textContent = job.nextSteps;
-    document.getElementById('notes').textContent = job.notes;
-    
-    // Display comments
-    displayComments(job.comments);
+    // Display actions
+    displayActions(job.actions || []);
 }
 
-// Display comments
-function displayComments(comments) {
-    const commentList = document.getElementById('commentList');
-    commentList.innerHTML = comments.map(comment => `
-        <div class="comment">
-            <div class="comment-header">
-                <span>${formatDate(comment.date)}</span>
+// Display actions
+function displayActions(actions) {
+    const actionList = document.getElementById('actionList');
+    actionList.innerHTML = '';
+
+    if (actions.length === 0) {
+        actionList.innerHTML = '<div class="no-actions">No actions yet</div>';
+        return;
+    }
+
+    actions.forEach(action => {
+        const actionElement = document.createElement('div');
+        actionElement.className = 'action';
+        actionElement.innerHTML = `
+            <div class="action-header">
+                <span>${action.date}</span>
             </div>
-            <div class="comment-text">${comment.text}</div>
-        </div>
-    `).join('');
+            <div class="action-text">${action.text}</div>
+        `;
+        actionList.appendChild(actionElement);
+    });
 }
 
-// Add new comment
-async function addComment() {
-    const input = document.getElementById('newComment');
-    const commentText = input.value.trim();
+// Toggle actions
+function toggleActions() {
+    const actionList = document.getElementById('actionList');
+    const actionForm = document.querySelector('.action-form');
     
-    if (commentText) {
+    if (actionList.style.display === 'none') {
+        actionList.style.display = 'flex';
+        actionForm.style.display = 'flex';
+    } else {
+        actionList.style.display = 'none';
+        actionForm.style.display = 'none';
+    }
+}
+
+// Add new action
+async function addAction() {
+    const actionInput = document.getElementById('newAction');
+    const actionText = actionInput.value.trim();
+    
+    if (actionText) {
+        const newAction = {
+            date: new Date().toLocaleDateString(),
+            text: actionText
+        };
+
+        const urlParams = new URLSearchParams(window.location.search);
+        const jobId = urlParams.get('id');
+        
         try {
             const response = await fetch('data.json');
             const data = await response.json();
             const job = data.jobs.find(j => j.id === jobId);
             
             if (job) {
-                const newComment = {
-                    id: `${jobId}${job.comments.length + 1}`,
-                    date: new Date().toISOString(),
-                    text: commentText
-                };
+                if (!job.actions) {
+                    job.actions = [];
+                }
+                job.actions.push(newAction);
                 
-                job.comments.push(newComment);
-                displayComments(job.comments);
-                input.value = '';
-                
-                // In a real application, you would save this to the server
-                console.log('New comment added:', newComment);
+                // Update the display
+                displayActions(job.actions);
+                actionInput.value = '';
             }
         } catch (error) {
-            console.error('Error adding comment:', error);
+            console.error('Error:', error);
         }
     }
 }
 
-// Format date for display
-function formatDate(dateStr) {
-    if (!dateStr) return '';
-    const date = new Date(dateStr);
-    return date.toLocaleDateString('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric'
-    });
-}
-
-// Handle Enter key in comment input
-document.getElementById('newComment').addEventListener('keypress', function(e) {
+// Handle Enter key in action input
+document.getElementById('newAction').addEventListener('keypress', function(e) {
     if (e.key === 'Enter') {
-        addComment();
+        addAction();
     }
 });
 
 // Load job details when page loads
-document.addEventListener('DOMContentLoaded', loadJobDetails); 
+document.addEventListener('DOMContentLoaded', () => {
+    if (jobId) {
+        loadJobDetails();
+    } else {
+        document.querySelector('main').innerHTML = '<p>No job ID provided</p>';
+    }
+}); 

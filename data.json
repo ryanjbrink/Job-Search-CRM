@@ -3,16 +3,10 @@
     {
       "id": "1",
       "company": "Example Corp",
-      "position": "Senior Software Engineer",
-      "applicationDate": "2024-03-15",
-      "status": "Hot",
-      "location": "Remote",
-      "salaryRange": "$130k-$160k",
-      "applicationUrl": "https://example.com/jobs/123",
-      "notes": "Great company culture",
-      "nextSteps": "Follow up next week",
-      "priority": "High",
-      "comments": [
+      "jobTitle": "Senior Software Engineer",
+      "about": "Great company culture and modern tech stack",
+      "connection": "John Smith (Engineering Manager) - Former colleague from TechCo",
+      "actions": [
         {
           "id": "1a",
           "date": "2024-03-15T10:00:00",
@@ -28,21 +22,20 @@
           "date": "2024-03-20T12:00:00",
           "text": "Talked with connection"
         }
-      ]
+      ],
+      "dateEntered": "2024-03-15",
+      "location": "Remote",
+      "applicationLink": "https://example.com/jobs/123",
+      "salary": "$130k-$160k",
+      "status": "Hot"
     },
     {
       "id": "2",
       "company": "Tech Solutions Inc",
-      "position": "Full Stack Developer",
-      "applicationDate": "2024-03-14",
-      "status": "Interviewing",
-      "location": "Hybrid",
-      "salaryRange": "$100k-$130k",
-      "applicationUrl": "https://techsolutions.com/careers",
-      "notes": "Technical interview scheduled",
-      "nextSteps": "Prepare for system design round",
-      "priority": "High",
-      "comments": [
+      "jobTitle": "Full Stack Developer",
+      "about": "Technical interview scheduled for next week",
+      "connection": "Sarah Johnson (Recruiter) - Met at Tech Conference 2024",
+      "actions": [
         {
           "id": "2a",
           "date": "2024-03-14T09:00:00",
@@ -53,21 +46,20 @@
           "date": "2024-03-15T11:00:00",
           "text": "HR reached out to schedule interview"
         }
-      ]
+      ],
+      "dateEntered": "2024-03-14",
+      "location": "Hybrid",
+      "applicationLink": "https://techsolutions.com/careers",
+      "salary": "$100k-$130k",
+      "status": "Interviewing"
     },
     {
       "id": "3",
       "company": "Startup XYZ",
-      "position": "Frontend Engineer",
-      "applicationDate": "2024-03-10",
-      "status": "Cold",
-      "location": "Office",
-      "salaryRange": "$90k-$120k",
-      "applicationUrl": "https://startup.xyz/jobs",
-      "notes": "Good learning experience",
-      "nextSteps": "None",
-      "priority": "Low",
-      "comments": [
+      "jobTitle": "Frontend Engineer",
+      "about": "Good learning experience with modern frontend technologies",
+      "connection": "Mike Chen (Senior Developer) - College friend",
+      "actions": [
         {
           "id": "3a",
           "date": "2024-03-10T15:00:00",
@@ -78,47 +70,50 @@
           "date": "2024-03-13T16:00:00",
           "text": "Received rejection email"
         }
-      ]
+      ],
+      "dateEntered": "2024-03-10",
+      "location": "Office",
+      "applicationLink": "https://startup.xyz/jobs",
+      "salary": "$90k-$120k",
+      "status": "Cold"
     },
     {
       "id": "4",
       "company": "Big Tech Co",
-      "position": "Software Engineer II",
-      "applicationDate": "2024-03-13",
-      "status": "Potential",
-      "location": "Remote",
-      "salaryRange": "$140k-$180k",
-      "applicationUrl": "https://bigtech.co/positions",
-      "notes": "Competitive benefits package",
-      "nextSteps": "Wait for response",
-      "priority": "Medium",
-      "comments": [
+      "jobTitle": "Software Engineer II",
+      "about": "Competitive benefits package and great work-life balance",
+      "connection": "None - Applied through company website",
+      "actions": [
         {
           "id": "4a",
           "date": "2024-03-13T13:00:00",
           "text": "Submitted application and coding challenge"
         }
-      ]
+      ],
+      "dateEntered": "2024-03-13",
+      "location": "Remote",
+      "applicationLink": "https://bigtech.co/positions",
+      "salary": "$140k-$180k",
+      "status": "Potential"
     },
     {
       "id": "5",
       "company": "Innovation Labs",
-      "position": "Senior Frontend Developer",
-      "applicationDate": "2024-03-16",
-      "status": "Hot",
-      "location": "Remote",
-      "salaryRange": "$120k-$150k",
-      "applicationUrl": "https://innovationlabs.com/careers",
-      "notes": "Modern tech stack, great benefits",
-      "nextSteps": "Technical interview next week",
-      "priority": "High",
-      "comments": [
+      "jobTitle": "Senior Frontend Developer",
+      "about": "Modern tech stack, great benefits, and flexible work environment",
+      "connection": "Alex Rodriguez (CTO) - LinkedIn connection, worked together at StartupHub",
+      "actions": [
         {
           "id": "5a",
           "date": "2024-03-16T09:00:00",
           "text": "Applied with referral from current employee"
         }
-      ]
+      ],
+      "dateEntered": "2024-03-16",
+      "location": "Remote",
+      "applicationLink": "https://innovationlabs.com/careers",
+      "salary": "$120k-$150k",
+      "status": "Hot"
     }
   ]
 } 

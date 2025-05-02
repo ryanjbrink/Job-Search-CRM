@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports - Job Search CRM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.0.0"></script>
+</head>
+<body>
+    <div class="container">
+        <header class="settings-header">
+            <div class="header-content">
+                <h1>Reports</h1>
+                <a href="index.html" class="back-button">
+                    <i class="fas fa-arrow-left"></i>
+                    Back to Dashboard
+                </a>
+            </div>
+        </header>
+
+        <main class="settings-container">
+            <!-- Application Statistics -->
+            <section class="settings-section">
+                <h2><i class="fas fa-chart-pie"></i> Application Statistics</h2>
+                <div class="stats-container">
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalApplications">0</div>
+                        <div class="stat-label">Total Applications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="interviewRate">0%</div>
+                        <div class="stat-label">Interview Rate</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="offerRate">0%</div>
+                        <div class="stat-label">Offer Rate</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Status Distribution -->
+            <section class="settings-section">
+                <h2><i class="fas fa-chart-bar"></i> Status Distribution</h2>
+                <div style="background-color: var(--surface-secondary); padding: 20px; border-radius: 8px;">
+                    <canvas id="statusChart" style="height: 300px;"></canvas>
+                </div>
+            </section>
+
+            <!-- Application Timeline -->
+            <section class="settings-section">
+                <h2><i class="fas fa-calendar-alt"></i> Application Timeline</h2>
+                <div style="background-color: var(--surface-secondary); padding: 20px; border-radius: 8px;">
+                    <canvas id="timelineChart" style="height: 300px;"></canvas>
+                </div>
+            </section>
+
+            <!-- Export Reports -->
+            <section class="settings-section">
+                <h2><i class="fas fa-file-export"></i> Export Reports</h2>
+                <div class="settings-group">
+                    <button class="export-btn" onclick="exportReport('pdf')">
+                        <i class="fas fa-file-pdf"></i>
+                        Export as PDF
+                    </button>
+                    <button class="export-btn" onclick="exportReport('csv')">
+                        <i class="fas fa-file-csv"></i>
+                        Export as CSV
+                    </button>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="report.js"></script>
+</body>
+</html> 
